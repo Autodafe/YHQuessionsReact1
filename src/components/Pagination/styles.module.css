@@ -1,0 +1,52 @@
+
+.pagination{
+    display: flex;
+    width: 100%;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    color: black;
+}
+
+.pageNumber {
+    padding: 8px;
+    border: none;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.pageNumber:disabled,.arrow:disabled {
+    cursor: default;
+}
+
+/* стили для точек */
+
+.pageNumberActive {
+    background-color: #6A0BFF;
+    color: white;
+}
+
+.pageNumber:hover {
+    background-color: #6A0BFF;
+    color: white;
+
+}
+
+.list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+}
+
+.arrow {
+    border: none;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+}
+.arrow:hover {
+    opacity: 0.6;
+}
