@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Skeleton from "./Skeleton/Skeleton";
+import { handleOnKeyDown } from "../helpers/handleOnnKeyDown";
 
 
-const Skills = ({selectSkills,handleSkillsClick}) => {
+const Skills = ({skills,handleSkillsClick}) => {
     const [isFullSkills,setIsFullSkills] = useState(false);
     const [skillsData,setSkillsData] = useState([])
     const [loadingSkills, setLoadingSkills] = useState(true);
@@ -51,9 +52,9 @@ const Skills = ({selectSkills,handleSkillsClick}) => {
                     :
                     <ul className="skills__list">
                         {skillsData.slice(0,isFullSkills ? skillsData.length : 5).map((item) => {
-                            const isActive = selectSkills.includes(item.id);
+                            const isActive = skills.includes(item.id);
                             return  (
-                                <li onClick={()=> handleSkillsClick(item.id)} key={item.id}  tabIndex={0} className={`skills__item ${isActive ? 'skills__item--active' : ''}`}>
+                                <li onClick={()=> handleSkillsClick(item.id)} onKeyDown={(event)=>handleOnKeyDown(event,()=>handleSkillsClick(item.id))} key={item.id}  tabIndex={0} className={`skills__item ${isActive ? 'skills__item--active' : ''}`}>
                                 <img src="/images/WireframingSkills.svg" alt="" />
                                 <p>{item.title}</p>
                                 </li>
@@ -62,7 +63,7 @@ const Skills = ({selectSkills,handleSkillsClick}) => {
                     </ul>
                    
                 }
-                <p onClick={handleOpenFull} className="skills__open-all-specs">{isFullSkills ? 'Скрыть' : 'Посмотреть все'}</p>
+                <p onClick={handleOpenFull} onKeyDown={(event)=>handleOnKeyDown(event,handleOpenFull)} tabIndex={0} className="skills__open-all-specs">{isFullSkills ? 'Скрыть' : 'Посмотреть все'}</p>
             </div>
     );
 };

@@ -3,6 +3,8 @@ import styles from "./styles.module.css"
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Skeleton from "../../components/Skeleton/Skeleton";
+import { handleOnKeyDown } from "../../helpers/handleOnnKeyDown";
+import NotFoundPage from "../NotFoundPage";
 
 const CurrentQuestion = () => {
     const {id} = useParams();
@@ -43,6 +45,7 @@ const CurrentQuestion = () => {
                 setData(response.data);
                 setLoading(false);
                 
+                
                
             } catch(err) {
               if(!axios.isCancel(err)) {
@@ -70,11 +73,12 @@ const CurrentQuestion = () => {
             
         
         <div className={styles.wrapper }>
-            <div className={styles.buttonBack} onClick={handleGoBack}> {'<'}Назад</div>
+            <div className={styles.buttonBack} tabIndex={0} onClick={handleGoBack} onKeyDown={(event)=>handleOnKeyDown(event,handleGoBack)}> {'<'}Назад</div>
             {loading ? (
             <Skeleton count={10} type="item" />
             ): error ? (
-             <p>Произошла ошибка при загрузке: {error.message}</p>
+            //  <p>Произошла ошибка при загрузке: {error.message}</p>
+             <NotFoundPage />
             ): data ? (
 
            
@@ -89,8 +93,8 @@ const CurrentQuestion = () => {
                         
                     </div>
                     <div className={`${styles.container} ${styles.nextBackButtons}`}>
-                        <div className={styles.nextButton} onClick={handlePreviousQuestion}>{'<'} Предыдущий</div>
-                        <div className={styles.backButton} onClick={handleNextQuestion}>Следущий {'>'}</div>
+                        <div className={styles.nextButton} tabIndex={0} onClick={handlePreviousQuestion} onKeyDown={(event)=>handleOnKeyDown(event,handlePreviousQuestion)}>{'<'} Предыдущий</div>
+                        <div className={styles.backButton} tabIndex={0} onClick={handleNextQuestion} onKeyDown={(event)=>handleOnKeyDown(event,handleNextQuestion)}>Следущий {'>'}</div>
                     </div>
                     
                    
@@ -192,7 +196,9 @@ const CurrentQuestion = () => {
             </div>
               
         
-      ): console.log(data)}
+      ): <NotFoundPage />
+      
+      }
       </div>
     );
 };

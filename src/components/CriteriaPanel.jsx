@@ -5,7 +5,7 @@ import Skills from "./Skills";
 import Specializations from "./Specializations";
 
 
-const CriteriaPanel = ({isOpenCriteria,setIsOpenCriteria,handleRateClick,selectedRates,handleRangeClick,selectedRanges,selectSkills,handleSkillsClick,selectSpecializations,handleSpecializationsClick,inputTitle,setInputTitle}) => {
+const CriteriaPanel = ({isOpenCriteria,setIsOpenCriteria,handleRateClick,rates,handleRangeClick,ranges,skills,handleSkillsClick,specialization,handleSpecializationsClick,inputTitle,setInputTitle}) => {
     return (
         <aside className={`criteriaPanel ${isOpenCriteria? 'open' : ''}`} >
             <button onClick={()=> setIsOpenCriteria(prev => !prev)} type="button" className="criteriaPanel__close-button"></button>
@@ -16,27 +16,27 @@ const CriteriaPanel = ({isOpenCriteria,setIsOpenCriteria,handleRateClick,selecte
             {/* specializations */}
 
              <Specializations 
-             selectSpecializations={selectSpecializations}
+             specialization={specialization}
              handleSpecializationsClick={handleSpecializationsClick}
              />
             
             {/* skills */}
 
             <Skills 
-            selectSkills={selectSkills}
+            skills={skills}
             handleSkillsClick={handleSkillsClick}
              />
 
            
                
             <RangeList 
-            selectedRanges={selectedRanges}
+            ranges={ranges}
             handleRangeClick= {handleRangeClick} 
             />
 
          
             
-            <Rating selectedRates={selectedRates} handleRateClick={handleRateClick} />
+            <Rating rates={rates} handleRateClick={handleRateClick} />
 
 
 

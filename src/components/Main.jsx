@@ -9,7 +9,9 @@ import { API_URL } from "../constants/constants";
 const Main = () => {
     const [isOpenCriteria,setIsOpenCriteria] = useState(false);
     
-    const {data,loading,error,pageNum,setPageNum,handleRateClick,selectedRates,handleRangeClick,selectedRanges,selectSkills,handleSkillsClick,selectSpecializations,handleSpecializationsClick,resetAllFilters,inputTitle,setInputTitle} = useFetchData(API_URL);
+    const {data,loading,error,currentPageNum,handleRateClick,rates,
+        handleRangeClick,ranges,skills,handleSkillsClick,specialization,
+        handleSpecializationsClick,resetAllFilters,inputTitle,setInputTitle,handleParamsChange} = useFetchData(API_URL);
 
 
     const totalPages = data?.total && data?.limit ? Math.ceil(data.total / data.limit) : 1;
@@ -19,20 +21,17 @@ const Main = () => {
    
    
     const handleNextPage = () => {
-        if(pageNum < totalPages) {
-            setPageNum(prev => prev + 1)
+        if(currentPageNum < totalPages) {
+            handleParamsChange('page',currentPageNum + 1)
         }
     }
 
     const handlePreviousPage = () => {
-        if(pageNum > 1) {
-            setPageNum(prev => prev - 1)
+        if(currentPageNum > 1) {
+            handleParamsChange('page',currentPageNum - 1)
         }
     }
 
-    const handlePageClick = (nubmerOfCurrentPage) => {
-            setPageNum(nubmerOfCurrentPage)
-    }
    
 
     return (
@@ -44,24 +43,24 @@ const Main = () => {
             error={error}   
             setIsOpenCriteria={setIsOpenCriteria} 
             totalPages={totalPages} 
-            pageNum={pageNum}
             handleNextPage={handleNextPage}
             handlePreviousPage={handlePreviousPage}
-            handlePageClick={handlePageClick}
             resetAllFilters={resetAllFilters}
+            currentPageNum={currentPageNum}
+            handleParamsChange={handleParamsChange}
             />
             
             
             <CriteriaPanel 
             isOpenCriteria={isOpenCriteria} 
             setIsOpenCriteria={setIsOpenCriteria} 
-            selectedRates={selectedRates} 
+            rates={rates} 
             handleRateClick={handleRateClick} 
-            selectedRanges={selectedRanges}
+            ranges={ranges}
             handleRangeClick= {handleRangeClick}
-            selectSkills={selectSkills}
+            skills={skills}
             handleSkillsClick={handleSkillsClick}
-            selectSpecializations={selectSpecializations}
+            specialization={specialization}
             handleSpecializationsClick={handleSpecializationsClick}
             inputTitle={inputTitle}
             setInputTitle={setInputTitle}

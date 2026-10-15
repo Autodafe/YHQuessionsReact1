@@ -4,7 +4,7 @@ import QuestionItem from "./QuestionItem";
 import Skeleton from "./Skeleton/Skeleton";
 
 
-const QuestionList = ({data,loading,error,setIsOpenCriteria,totalPages,pageNum,handleNextPage,handlePreviousPage,handlePageClick,resetAllFilters}) => {
+const QuestionList = ({data,loading,error,setIsOpenCriteria,totalPages,currentPageNum,handleNextPage,handlePreviousPage,resetAllFilters,handleParamsChange}) => {
 
 
     return (
@@ -35,10 +35,12 @@ const QuestionList = ({data,loading,error,setIsOpenCriteria,totalPages,pageNum,h
            totalPages > 1 &&
             <Pagination 
             totalPages={totalPages}
-            pageNum={pageNum}
+            currentPageNum={currentPageNum}
             handleNextPage={handleNextPage}
             handlePreviousPage={handlePreviousPage}
-            handlePageClick={handlePageClick} 
+          
+            handleParamsChange={handleParamsChange}
+            
             />
             }
             

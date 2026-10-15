@@ -1,7 +1,8 @@
 import axios from "axios";
-import { useEffect, useState } from "react"
+import { useEffect,  useState } from "react"
 import { DIFFICULTY_RANGES } from "../constants/constants";
 import { useDebounce } from "./useDebounce";
+import { useSearchParams } from "react-router-dom";
 
 // DIFFICULTY_RANGES
 
@@ -12,75 +13,171 @@ export const useFetchData = (apiUrl) => {
     const [data,setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error,setError] = useState(null);
-    const [pageNum,setPageNum] = useState(1);
-    // Хранение рейтинга
-    const [selectedRates, setSelectedRates] = useState([]);
-    // Стейт для кнопок-диапазонов 
-    const [selectedRanges, setSelectedRanges] = useState([]);
-    // Стейт для кнопок-навыков
-    const [selectSkills, setSelectSkills] = useState([]);
-    // Стейт для кнопок-специализаций
-    const [selectSpecializations, setSelectSpecializations] = useState(null);
-     // Стейт для поиска тайтла в инпуте
-    const [inputTitle, setInputTitle] = useState('');
 
-    //  Функция для обработки клика по кнопке сложности
-    const handleRateClick = (rate) => {
-        setPageNum(1);
-        setSelectedRates((prevRates) => {
-      if (prevRates.includes(rate)) {
-        return prevRates.filter((item) => item !== rate);
-      } else {
-        return [...prevRates, rate];
-      }
+
+
+
+
+    
+
+  
+
+
+    //Search Params
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    //Текущая страиница
+    const currentPageNum = Number(searchParams.get('page') || 1);
+    //Специализации
+    const specialization = searchParams.get('specialization') || '';
+
+    //Скиллы
+    const searchSkills = searchParams.get('skills');
+    const skills = searchSkills ? searchSkills.split(",").map(Number) : [];
+
+    //Уровень сложности
+    const searchRanges = searchParams.get('ranges');
+    const ranges = searchRanges ? searchRanges.split(",") : [];
+
+    //Рейтинг
+    const searchRates = searchParams.get('rates');
+    const rates = searchRates ? searchRates.split(",").map(Number) : [];
+
+    //Тайлт инпута
+    const inputText = searchParams.get('title') || '';
+
+
+     // Стейт для поиска тайтла в инпуте 
+    const [inputTitle, setInputTitle] = useState(inputText);
+
+
+
+
+
+  
+
+  
+
+     
+
+
+
+    //Функция замены параметров Search Params 'параметр', значение
+    const handleParamsChange = (paramOrObject, value) => {
+    setSearchParams((prevSearchParams) => {
+        const newParams = new URLSearchParams(prevSearchParams);
+
+        if (typeof paramOrObject === 'object' && paramOrObject !== null) {
+            Object.entries(paramOrObject).forEach(([key, val]) => {
+                newParams.set(key, val);
+            });
+        } else {
+            newParams.set(paramOrObject, value);
+        }
+
+        return newParams;
     });
-  };
+};
 
-  // Функция для обработки клика по кнопкам диапазонов
+ 
+ // Функция для обработки клика по кнопкам диапазонов (Уровень сложности)
         const handleRangeClick = (rangeId) => {
-        setPageNum(1);
-        setSelectedRanges((prev) => 
-        prev.includes(rangeId) ? prev.filter((id) => id !== rangeId) : [...prev, rangeId]
-        );
+
+        const currentRanges = ranges;
+        let updatedRanges;
+
+        if(currentRanges.includes(rangeId)) {
+          updatedRanges = currentRanges.filter((item) => item !== rangeId);
+        } else {
+          updatedRanges = [...currentRanges,rangeId];
+        }
+
+        handleParamsChange({'page': 1,'ranges':updatedRanges.join(",")});
+
     };
 
 
-     //  Функция для обработки клика по кнопке скилла
-    const handleSkillsClick  = (id) => {
-        setPageNum(1);
-        setSelectSkills((prevRates) => {
-      if (prevRates.includes(id)) {
-        return prevRates.filter((item) => item !== id);
-      } else {
-        return [...prevRates, id];
-      }
-    });
+ 
+
+
+  //  Функция для обработки клика по кнопке Рейтигна
+    const handleRateClick = (rate) => {
+      
+        const currentRates = rates;
+        let updatedRates;
+
+
+        if(currentRates.includes(rate)) {
+          updatedRates = currentRates.filter((item) => item !== rate);
+        } else {
+          updatedRates = [...currentRates,rate]
+        }
+
+        handleParamsChange({'page': 1,'rates':updatedRates.join(",")});
   };
+
+ 
+
+
+
+   //  Функция для обработки клика по кнопке скилла
+    const handleSkillsClick  = (id) => {
+
+        const currentSkills = skills;
+        let updatedSkills;
+        
+        if(currentSkills.includes(id)) {
+          updatedSkills = currentSkills.filter((item) => item !== id);
+        } else {
+          updatedSkills = [...currentSkills,id]
+        }
+        handleParamsChange({'page': 1,'skills':updatedSkills.join(",")});
+    };
+
+ 
 
   //  Функция для обработки клика по кнопке специализации
     const handleSpecializationsClick = (slug) => {
-        setPageNum(1);
-
-        setSelectSpecializations((prevSpec) => {
-      if (prevSpec===slug) {
-        return null;
-      } else {
-        return slug;
-      }
-    });
+ 
+        if(specialization === slug) {
+          handleParamsChange({'page': 1,'specialization':''});
+        } else {
+          handleParamsChange({'page': 1,'specialization':slug});
+        }    
   };
 
+  //Обработка инпута и дебаунс
+  const debouncedInputTitle = useDebounce(inputTitle,1000); 
+
+  useEffect(()=> {   
+
+     if (debouncedInputTitle === inputText) {
+        return; 
+      }
+    
+
+      handleParamsChange({'page': 1,'title':debouncedInputTitle});
+  },[debouncedInputTitle]);
+
+
+
+  //Reset all filters
   const resetAllFilters = () => {
-    setPageNum(1);
-    setSelectedRates([]);
-    setSelectedRanges([]);
-    setSelectSkills([]);
-    setSelectSpecializations(null);
-    setInputTitle('')
+
+    setInputTitle('');
+
+    handleParamsChange(
+      {
+        'page': 1,
+        'skills':[],
+        'specialization':'',
+        'rates': [],
+        'ranges': [],
+        'title': '',
+      }
+    );
   }
 
-
-  const debouncedInputTitle = useDebounce(inputTitle,1000,() => setPageNum(1)); 
 
    
 // ------------------------------------------
@@ -92,7 +189,7 @@ export const useFetchData = (apiUrl) => {
 
              const difficultyParams = [];
             DIFFICULTY_RANGES.forEach((range) => {
-                if (selectedRanges.includes(range.id)) {
+                if (ranges.includes(range.id)) {
                 for (let i = range.min; i <= range.max; i++) {
                      difficultyParams.push(i);
                 }
@@ -110,18 +207,19 @@ export const useFetchData = (apiUrl) => {
                     signal: abortController.signal,
 
                     params:{
-                        page: pageNum,
-                        rate: selectedRates,
+                        page: currentPageNum,
+                        rate: rates,
                         complexity:difficultyParams,
-                        title: debouncedInputTitle,
-                        specializationSlug: selectSpecializations,
-                        skills: selectSkills
+                        title: inputText,
+                        specializationSlug: specialization,
+                        skills: skills
                         
                        
                     }
                 });
                 setData(response.data);
                 setLoading(false);
+               
 
                 
             } catch(err) {
@@ -138,10 +236,10 @@ export const useFetchData = (apiUrl) => {
         }
 
 
-    },[apiUrl,pageNum,selectedRates,selectedRanges,selectSkills,selectSpecializations,debouncedInputTitle])
+    },[apiUrl,searchParams])
 
-    return {data,loading,error,pageNum,setPageNum,handleRateClick,
-        selectedRates,handleRangeClick,selectedRanges,selectSkills,
-        handleSkillsClick,selectSpecializations,handleSpecializationsClick,resetAllFilters,inputTitle,setInputTitle
+    return {data,loading,error,currentPageNum,handleRateClick,
+        rates,handleRangeClick,ranges,skills,
+        handleSkillsClick,specialization,handleSpecializationsClick,resetAllFilters,inputTitle,setInputTitle,handleParamsChange
     }
 }

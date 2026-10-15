@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { handleOnKeyDown } from "../helpers/handleOnnKeyDown";
 
 
 const QuestionItem = ({id,title,description,complexity,rate}) => {
@@ -19,7 +20,7 @@ const QuestionItem = ({id,title,description,complexity,rate}) => {
 
     return (
         <li className="questionList__item questionItem" >
-            <div className="questionItem__title-wrapper" onClick={toggleAccordion}>
+            <div className="questionItem__title-wrapper" onClick={toggleAccordion} onKeyDown={(event)=>handleOnKeyDown(event,toggleAccordion)} tabIndex={0}>
                 <h2 className="questionItem__title">{title}</h2>
                     <svg 
                         width="16" 

@@ -1,7 +1,7 @@
 
 import styles from "./styles.module.css"
 
-const Pagination = ({totalPages,pageNum,handleNextPage,handlePreviousPage,handlePageClick}) => {
+const Pagination = ({totalPages,currentPageNum,handleNextPage,handlePreviousPage,handleParamsChange}) => {
 
     const getPageNumbers = () => {
     const pages = [];
@@ -13,11 +13,11 @@ const Pagination = ({totalPages,pageNum,handleNextPage,handlePreviousPage,handle
         pages.push(i);
       }
       // Показываем страницы вокруг текущей в пределах диапазона (range)
-      else if (i >= pageNum - range && i <= pageNum + range) {
+      else if (i >= currentPageNum - range && i <= currentPageNum + range) {
         pages.push(i);
       }
       // Добавляем троеточие, если есть разрыв
-      else if (i === pageNum - range - 1 || i === pageNum + range + 1) {
+      else if (i === currentPageNum - range - 1 || i === currentPageNum + range + 1) {
         pages.push("...");
       }
     }
@@ -30,7 +30,7 @@ const Pagination = ({totalPages,pageNum,handleNextPage,handlePreviousPage,handle
     return (
         <div className={styles.pagination}>
 
-            <button onClick={handlePreviousPage} className={styles.arrow} disabled={pageNum === 1}>{'<'}</button>
+            <button onClick={handlePreviousPage} className={styles.arrow} disabled={currentPageNum === 1}>{'<'}</button>
 
             <div className={styles.list}>
 
@@ -45,10 +45,10 @@ const Pagination = ({totalPages,pageNum,handleNextPage,handlePreviousPage,handle
 
                         return (
                             <button
-                                onClick={() => handlePageClick(page)}
-                                className={`${styles.pageNumber} ${pageNum === page ? styles.pageNumberActive : ""}`}
+                                onClick={() => handleParamsChange('page',page)}
+                                className={`${styles.pageNumber} ${currentPageNum === page ? styles.pageNumberActive : ""}`}
                                 key={page}
-                                disabled={page === pageNum}
+                                disabled={page === currentPageNum}
                             >
                              {page}
                             </button>
@@ -59,7 +59,7 @@ const Pagination = ({totalPages,pageNum,handleNextPage,handlePreviousPage,handle
             </div>
 
 
-            <button onClick={handleNextPage} className={styles.arrow} disabled={pageNum >= totalPages}>{'>'}</button>
+            <button onClick={handleNextPage} className={styles.arrow} disabled={currentPageNum >= totalPages}>{'>'}</button>
         </div>
     );
 };

@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Skeleton from "./Skeleton/Skeleton";
+import { handleOnKeyDown } from "../helpers/handleOnnKeyDown";
 
-const Specializations = ({selectSpecializations,handleSpecializationsClick}) => {
+const Specializations = ({specialization,handleSpecializationsClick}) => {
 
      const [isFullSpecializations,setIsFullSpecializations] = useState(false);
     const [specializationsData,setSpecializationsData] = useState([])
@@ -49,7 +50,7 @@ const Specializations = ({selectSpecializations,handleSpecializationsClick}) => 
                     <ul className="specializations__list">
                         {specializationsData.slice(0,isFullSpecializations ? specializationsData.length : 5).map((item) => {
                             return  (
-                                <li onClick={()=> handleSpecializationsClick(item.slug)} key={item.id}  tabIndex={0} className={`specializations__item ${selectSpecializations === item.slug ? 'specializations__item--active' : ''}`}>
+                                <li onClick={()=> handleSpecializationsClick(item.slug)} onKeyDown={(event)=>handleOnKeyDown(event,()=>handleSpecializationsClick(item.slug))}  key={item.id}  tabIndex={0} className={`specializations__item ${specialization === item.slug ? 'specializations__item--active' : ''}`}>
                                 
                                 {item.title}
                                 </li>
@@ -64,7 +65,7 @@ const Specializations = ({selectSpecializations,handleSpecializationsClick}) => 
                 
 
 
-                <p onClick={handleOpenFull} className="specializations__open-all-specs">{isFullSpecializations ? 'Скрыть' : 'Посмотреть все'}</p>
+                <p onClick={handleOpenFull} onKeyDown={(event)=>handleOnKeyDown(event,handleOpenFull)} tabIndex={0} className="specializations__open-all-specs">{isFullSpecializations ? 'Скрыть' : 'Посмотреть все'}</p>
         </div>
     );
 };
