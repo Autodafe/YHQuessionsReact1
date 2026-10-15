@@ -80,10 +80,14 @@ export const useFetchData = (apiUrl) => {
   }
 
 
-  const debouncedInputTitle = useDebounce(inputTitle,1000);
+  const debouncedInputTitle = useDebounce(inputTitle,1000,() => setPageNum(1)); 
+
    
 // ------------------------------------------
     useEffect(() => {
+
+        const abortController = new AbortController();
+
         const fetchData = async () => {
 
              const difficultyParams = [];
@@ -102,6 +106,9 @@ export const useFetchData = (apiUrl) => {
             try {
                 
                 const response = await axios.get(apiUrl , {
+
+                    signal: abortController.signal,
+
                     params:{
                         page: pageNum,
                         rate: selectedRates,
@@ -114,16 +121,23 @@ export const useFetchData = (apiUrl) => {
                     }
                 });
                 setData(response.data);
+                setLoading(false);
 
                 
             } catch(err) {
+              if(!axios.isCancel(err)) {
                 setError(err);
-            } finally {
                 setLoading(false);
-                
+              }
             }
         }
         fetchData();
+
+        return () => {
+          abortController.abort();
+        }
+
+
     },[apiUrl,pageNum,selectedRates,selectedRanges,selectSkills,selectSpecializations,debouncedInputTitle])
 
     return {data,loading,error,pageNum,setPageNum,handleRateClick,

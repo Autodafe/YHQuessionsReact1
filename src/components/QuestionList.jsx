@@ -5,11 +5,7 @@ import Skeleton from "./Skeleton/Skeleton";
 
 
 const QuestionList = ({data,loading,error,setIsOpenCriteria,totalPages,pageNum,handleNextPage,handlePreviousPage,handlePageClick,resetAllFilters}) => {
-//     const faqData = [
-//     { id: 1, title: 'Что такое React?', content: 'React — это JavaScript-библиотека для создания пользовательских интерфейсов.' },
-//     { id: 2, title: 'Как работает useState?', content: 'Хук useState позволяет добавлять состояние React в функциональные компоненты.' },
-//     { id: 3, title: 'Зачем нужен useEffect?', content: 'useEffect используется для выполнения побочных эффектов (запросы к API, подписки) в компоненте.' },
-//   ];
+
 
     return (
        
@@ -23,10 +19,11 @@ const QuestionList = ({data,loading,error,setIsOpenCriteria,totalPages,pageNum,h
             <Skeleton count={10} type="item" />
             : error ? 
              <p>Произошла ошибка при загрузке: {error.message}</p>
-            : data.length > 0 ? (
+            : data?.length > 0 ? (
+                
                  <ul className="questionList__list">
                 {data.map(item=> (
-                    <QuestionItem key={item.id} title={item.title} description={item.description}  complexity={item.complexity} rate={item.rate} />
+                    <QuestionItem key={item.id} id={item.id} title={item.title} description={item.description}  complexity={item.complexity} rate={item.rate} />
                 ))}
             </ul> 
             ) : 

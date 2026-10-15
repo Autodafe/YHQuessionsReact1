@@ -1,0 +1,169 @@
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    position: relative;
+}
+
+
+.buttonBack {
+    cursor: pointer;
+    display: flex;
+    /* flex-shrink: 0; */
+    align-self: flex-start;
+    flex-grow: 0;
+    color: #6A0BFF;
+}
+
+.buttonBack:hover {
+    opacity: 0.8;
+}
+
+.container {
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(106, 99, 118, 0.1);
+    padding: 20px 24px;
+    background-color: #ffffff;
+}
+
+.contentWrapper {
+    display: flex;
+}
+
+
+
+
+
+
+
+.flex2 {
+    flex:2;
+}
+
+.flex1 {
+    flex:1;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.panelWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 20px;
+}
+
+.authorWrapper {
+    margin-top: 20px;
+    border: 1px solid #6A0BFF;
+}
+
+.authorImage {
+    width: 45px;
+    height: 45px;
+}
+
+.socList {
+    margin-top: 12px;
+    display: flex;
+    gap: 12px;
+}
+
+.socImage {
+    width: 24px;
+    height: 24px;
+}
+
+.nextBackButtons {
+    display: flex;
+    gap: 10px;
+    justify-content: space-around;
+}
+
+.nextButton, .backButton {
+    cursor: pointer;
+}
+
+.nextButton:hover, .backButton:hover {
+    opacity: 0.8;
+}
+
+.titleWrapper {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding-right: 30px;
+}
+
+
+.keywordList li {
+    color: #6A0BFF;
+}
+
+.titleWrapper button {
+    position: absolute;
+    right: 30px;
+    top: 40px;
+    width: 36px;
+    height: 36px;
+    background-color: transparent;
+    border: none;
+    background-image: url('../images/Filterbutton.svg');
+    display: none;
+}
+
+.panelWrapper.openPanel {
+    display: flex ;
+}
+
+
+
+.closeButton {
+    display: none;
+    width: 20px;
+    height: 20px;
+    background-image: url('../images/Closebutton.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    flex-shrink: 0;
+    align-self: flex-end;
+}
+
+
+
+
+@media(max-width:768px) {
+    .contentWrapper {
+        flex-direction: column;
+    }
+
+    .panelWrapper {
+        position: absolute;
+        top:0;
+        right: 0;
+        max-width: 320px;
+        display: none;
+    }
+
+    .titleWrapper button {
+        display: block;
+    }
+    .closeButton {
+        display: flex;
+        margin-bottom: 8px;
+    }
+}

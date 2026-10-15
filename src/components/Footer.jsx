@@ -15,27 +15,27 @@ const Footer = () => {
                     <ul className="websocial__list">
                         <li className="websocial__item">
                             <a  href="#" className="websocial__link">
-                                <img className="websocial__icon" src="src/assets/FigmaIcon.svg" alt="Figma Icon" />
+                                <img className="websocial__icon" src="/images/FigmaIcon.svg" alt="Figma Icon" />
                             </a>
                         </li>
                         <li className="websocial__item">
                             <a  href="#" className="websocial__link">
-                                <img className="websocial__icon" src="src/assets/Telegram_white.svg" alt="Telegram Icon" />
+                                <img className="websocial__icon" src="/images/Telegram_white.svg" alt="Telegram Icon" />
                             </a>
                         </li>
                         <li className="websocial__item">
                             <a  href="#" className="websocial__link">
-                                <img className="websocial__icon" src="src/assets/youtubeIcon.svg" alt="Youtube Icon" />
+                                <img className="websocial__icon" src="/images/youtubeIcon.svg" alt="Youtube Icon" />
                             </a>
                         </li>
                         <li className="websocial__item">
                             <a  href="#" className="websocial__link">
-                                <img className="websocial__icon" src="src/assets/tiktokIcon.svg" alt="TikTok Icon" />
+                                <img className="websocial__icon" src="/images/tiktokIcon.svg" alt="TikTok Icon" />
                             </a>
                         </li>
                         <li className="websocial__item">
                             <a  href="#" className="websocial__link">
-                                <img className="websocial__icon" src="src/assets/GithubIcon.svg" alt="GitHub Icon" />
+                                <img className="websocial__icon" src="/images/GithubIcon.svg" alt="GitHub Icon" />
                             </a>
                         </li>
                     </ul>

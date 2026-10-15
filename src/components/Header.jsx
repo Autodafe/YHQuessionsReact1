@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 
 const Header = () => {
@@ -6,14 +7,15 @@ const Header = () => {
     return (
         <header className="header">
             {/* <img src="/src/assets/YeaHubQuessionReact1.svg" alt="Yeahub Logo" /> */}
-            <a href="#">
+            <Link to="/">
+
                 <picture>
                 
-                <source media="(min-width: 768px)" srcSet="/src/assets/YeaHubQuessionReact1.svg" />
+                <source media="(min-width: 768px)" srcSet="/images/YeaHubQuessionReact1.svg" />
                 
-                <img src="/src/assets/logoMobile.svg" alt="Yeahub Logo" />
+                <img src="/images/logoMobile.svg" alt="Yeahub Logo" />
                 </picture>
-            </a>
+            </Link>
 
             <div className="header__list-wrapper">
 

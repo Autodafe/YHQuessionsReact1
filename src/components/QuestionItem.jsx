@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 
-const QuestionItem = ({title,description,complexity,rate}) => {
+const QuestionItem = ({id,title,description,complexity,rate}) => {
     const [isOpen, setIsOpen] = useState(false);
     const [height, setHeight] = useState('0px')
     const contentRef = useRef(null);
@@ -75,6 +76,11 @@ const QuestionItem = ({title,description,complexity,rate}) => {
 
 
                   <p>{description}</p>
+
+                  <div className="questionItem__moreInfo">
+                     
+                     <Link to={`/question/${id}`} className="questionItem__moreInfoText">Подробнее </Link>
+                    </div>
                     
                 
                 </div>

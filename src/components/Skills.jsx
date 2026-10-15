@@ -54,7 +54,7 @@ const Skills = ({selectSkills,handleSkillsClick}) => {
                             const isActive = selectSkills.includes(item.id);
                             return  (
                                 <li onClick={()=> handleSkillsClick(item.id)} key={item.id}  tabIndex={0} className={`skills__item ${isActive ? 'skills__item--active' : ''}`}>
-                                <img src="src/assets/WireframingSkills.svg" alt="" />
+                                <img src="/images/WireframingSkills.svg" alt="" />
                                 <p>{item.title}</p>
                                 </li>
                             )
